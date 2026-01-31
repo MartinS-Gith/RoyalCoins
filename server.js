@@ -46,7 +46,7 @@ app.get('/check-char', async (req, res) => {
         // Navegación con tiempo de espera generoso
         await page.goto(targetUrl, { 
             waitUntil: 'domcontentloaded', 
-            timeout: 40000 
+            timeout: 4000 
         });
 
         // Espera de seguridad para que cargue el contenido dinámico
