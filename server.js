@@ -28,6 +28,7 @@ app.get('/check-char', async (req, res) => {
     try {
         browser = await puppeteer.launch({
             headless: "new",
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
             // FLAGS CRÍTICAS PARA RENDER/DOCKER
             args: [
                 '--no-sandbox', 
