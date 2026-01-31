@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprar RubiniCoins - RoyalCoins</title>
+    <link rel="icon" href="icono.png" type="image/png">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/rubini-comprar.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="favicon.png" alt="Logo" class="nav-logo me-2" style="border-radius: 50%;">
+                RoyalCoins
+            </a>
+
+            <div id="businessStatus" class="d-none d-lg-flex align-items-center position-absolute start-50 translate-middle-x">
+                <span id="statusDot" class="status-dot me-2"></span>
+                <div class="d-flex flex-column text-start" style="line-height: 1.1;">
+                    <span id="statusText" class="small fw-bold text-uppercase"
+                        style="letter-spacing: 1px; font-size: 0.8rem;">Cargando...</span>
+                    <span class="tiny-text text-secondary" style="font-size: 0.65rem;">9:00 AM - 10:00 PM</span>
+                </div>
+            </div>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto text-uppercase small fw-bold align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active text-rubini-primary" href="#" role="button" data-bs-toggle="dropdown">Comprar</a>
+                        <ul class="dropdown-menu dropdown-menu-dark border-rubini">
+                            <li><a class="dropdown-item" href="index.html#precios">Tibia Coins</a></li>
+                            <li><a class="dropdown-item active" href="comprar-rubini.html">Rubini Coins</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Vender</a>
+                        <ul class="dropdown-menu dropdown-menu-dark border-rubini">
+                            <li><a class="dropdown-item" href="vender.html">Tibia Coins</a></li>
+                            <li><a class="dropdown-item" href="vender-rubini.html">Rubini Coins</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <select id="currencySelector" class="form-select form-select-sm bg-black text-rubini-primary border-rubini" style="width: auto; cursor: pointer;">
+                            <option value="CLP" selected>🇨🇱 CLP</option>
+                            <option value="BRL">🇧🇷 BRL</option>
+                            <option value="USD">🇺🇸 USD</option>
+                            <option value="ARS">🇦🇷 ARS</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="container text-center py-5 mt-5">
+        <h1 class="display-4 text-rubini-primary fw-bold mb-3 mt-4 text-glow-blue">Rubini Coins Premium</h1>
+        <p class="lead text-light">Adquiere tus Rubini Coins con tecnología de entrega inmediata.</p>
+        
+        <div class="row mt-5 g-4 text-center justify-content-center">
+            <div class="col-md-4">
+                <div class="p-3 border border-secondary rounded bg-black bg-opacity-50">
+                    <i class="bi bi-lightning-charge-fill text-rubini-primary display-6"></i>
+                    <h5 class="mt-2 text-rubini-accent">Entrega Flash</h5>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 border border-secondary rounded bg-black bg-opacity-50">
+                    <i class="bi bi-shield-check text-rubini-primary display-6"></i>
+                    <h5 class="mt-2 text-rubini-accent">100% Seguro</h5>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="proceso" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="text-rubini-primary">Proceso de Compra</h2>
+                <div class="divider-rubini"></div>
+                <p class="text-secondary">Sigue estos 3 simples pasos para obtener tus Rubini Coins.</p>
+            </div>
+    
+            <div class="row g-4 justify-content-center">
+                <div class="col-12 col-md-4">
+                    <div class="card-rubini h-100 text-center p-4">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <span class="step-badge mx-auto fs-4">1</span>
+                            </div>
+                            <h4 class="card-title text-light mb-3">Cotiza tu Pedido</h4>
+                            <p class="text-secondary">
+                                Usa nuestra calculadora abajo para ingresar la cantidad exacta de RC que necesitas y ver el
+                                precio en tu moneda local.
+                            </p>
+                            <i class="bi bi-calculator text-rubini-primary fs-1 mt-2"></i>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-12 col-md-4">
+                    <div class="card-rubini h-100 text-center p-4" style="border-color: var(--rubini-blue);">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <span class="step-badge mx-auto fs-4">2</span>
+                            </div>
+                            <h4 class="card-title text-rubini-accent">Realiza el Pago</h4>
+                            <p class="text-secondary">
+                                Ingresa tu nombre de personaje y presiona "Ir a Pagar". Verás los datos bancarios para
+                                realizar tu transferencia segura.
+                            </p>
+                            <i class="bi bi-credit-card-2-front text-rubini-accent fs-1 mt-2"></i>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-12 col-md-4">
+                    <div class="card-rubini h-100 text-center p-4">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <span class="step-badge mx-auto fs-4 success"><i class="bi bi-check-lg"></i></span>
+                            </div>
+                            <h4 class="card-title text-light mb-3">Recibe tus Coins</h4>
+                            <p class="text-secondary">
+                                Envíanos el comprobante por WhatsApp y recibirás tus Rubini Coins de forma inmediata
+                                mediante nuestro sistema flash.
+                            </p>
+                            <i class="bi bi-gem text-success fs-1 mt-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="text-center mt-5">
+                <a href="#calculadora" class="text-warning display-6 animate-bounce">
+                    <i class="bi bi-chevron-double-down"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculadora" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="card-rubini p-4 p-md-5 text-center shadow-lg">
+                        <h3 class="mb-4 text-rubini-primary"><i class="bi bi-calculator me-2"></i>Cotizar Pedido</h3>
+                        
+                        <div class="row g-3 text-start">
+                            <div class="col-md-6">
+                                <label class="form-label text-white text-light">Cantidad (RC)</label>
+                                <input type="number" id="coinInput" class="form-control form-control-rubini text-center" placeholder="Ej: 250" step="25" min="25">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white text-light">Precio Total</label>
+                                <input type="text" id="priceOutput" class="form-control form-control-rubini text-center fw-bold text-rubini-primary" value="---" readonly style="border-color: var(--rubini-blue);">
+                            </div>
+                            
+                            <div class="col-12">
+                                <label class="form-label text-white text-light">Nombre de tu Personaje (Char Name)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark text-rubini-primary border-secondary"><i class="bi bi-person-fill"></i></span>
+                                    <input type="text" id="charNameInput" class="form-control form-control-rubini" placeholder="Ej: John Doe">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-check mt-3 mb-2 text-start">
+                            <input class="form-check-input bg-dark border-secondary" type="checkbox" id="checkTerms">
+                            <label class="form-check-label small text-secondary" for="checkTerms">
+                                Acepto los <a href="#" class="text-decoration-none text-info" data-bs-toggle="modal" data-bs-target="#termsModal">Términos de Compra</a> y confirmo el personaje.
+                            </label>
+                        </div>
+                        
+                        <div class="mb-3 text-center" id="paymentMethodIcons" style="min-height: 30px;">
+                            </div>
+
+                        <div id="warningMsg" class="text-info small mt-2" style="display:none;">
+                            <i class="bi bi-info-circle me-1"></i> Ingresa una cantidad válida y tu nombre.
+                        </div>
+
+                        <div class="mt-2">
+                            <button class="btn btn-rubini w-100 py-3 fw-bold" id="startPaymentBtn">
+                                <i class="bi bi-wallet2 me-2"></i>Realizar Pedido
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background-color: #0b1120; border: 1px solid #0d6efd; color: white;">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title text-rubini-primary font-medieval" style="letter-spacing: 1px;">Confirmar Pedido</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="small text-white mb-3 font-medieval">REVISA LOS DATOS ANTES DE ENVIAR:</p>
+                    
+                    <ul class="list-group list-group-flush rounded border border-secondary">
+                        <li class="list-group-item bg-dark text-light border-secondary d-flex justify-content-between align-items-center p-3">
+                            <span class="text-white text-uppercase small font-medieval" style="letter-spacing: 1px;">COMPRAS:</span> 
+                            <strong id="modalAmount" class="text-rubini-primary fs-5" style="font-family: sans-serif;">---</strong>
+                        </li>
+                        
+                        <li class="list-group-item bg-dark text-light border-secondary d-flex justify-content-between align-items-center p-3">
+                            <span class="text-white text-uppercase small font-medieval" style="letter-spacing: 1px;">PAGAS:</span> 
+                            <strong id="modalPrice" class="text-success fs-5" style="font-family: sans-serif;">---</strong>
+                        </li>
+                        
+                        <li class="list-group-item bg-dark text-light border-secondary d-flex justify-content-between align-items-center p-3">
+                            <span class="text-white text-uppercase small font-medieval" style="letter-spacing: 1px;">PERSONAJE:</span> 
+                            <span id="modalChar" class="fw-bold text-white" style="font-family: sans-serif; letter-spacing: 0.5px;">---</span>
+                        </li>
+
+                        <li class="list-group-item bg-dark text-light border-secondary p-3">
+                            <div class="text-white text-uppercase small mb-2 font-medieval" style="letter-spacing: 1px;">DATOS BANCARIOS:</div>
+                            <div class="p-3 rounded" style="background-color: rgba(13, 110, 253, 0.1); border: 1px dashed #0d6efd;">
+                                <div id="modalBankDetails" class="fw-bold text-rubini-accent" style="font-family: sans-serif; font-size: 0.95rem; white-space: pre-line; line-height: 1.6;">---</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer border-secondary p-2">
+                    <div class="row w-100 g-2">
+                        <div class="col-4">
+                            <button type="button" class="btn btn-secondary w-100 font-medieval" data-bs-dismiss="modal">EDITAR</button>
+                        </div>
+                        <div class="col-8">
+                            <button type="button" class="btn btn-rubini w-100 fw-bold font-medieval" id="btnConfirmWhatsapp">
+                                <i class="bi bi-whatsapp me-2"></i>CONFIRMAR Y ENVIAR
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content" style="background-color: #0b1120; border: 1px solid #0d6efd; color: #e0e6ed;">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title text-rubini-primary font-medieval">Términos de Compra</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body small" style="font-family: sans-serif;">
+                    <h6 class="text-rubini-primary fw-bold font-medieval">1. Datos Correctos</h6>
+                    <p>Es responsabilidad del cliente ingresar correctamente el nombre del personaje.</p>
+                    <h6 class="text-rubini-primary fw-bold font-medieval">2. Seguridad Bancaria</h6>
+                    <p>Podemos solicitar verificación de identidad del titular de la cuenta bancaria para evitar fraudes.</p>
+                    <h6 class="text-rubini-primary fw-bold font-medieval">3. Entregas</h6>
+                    <p>Las entregas se procesan inmediatamente después de confirmar el pago.</p>
+                    <h6 class="text-rubini-primary fw-bold font-medieval">4. Finalidad</h6>
+                    <p>Al recibir los Rubini Coins, la transacción se considera completada y no reembolsable.</p>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-rubini btn-sm" data-bs-dismiss="modal" onclick="document.getElementById('checkTerms').checked = true;">Aceptar Todo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-1 text-secondary">© 2026 <span class="text-info font-medieval">RoyalCoins</span></p>
+            
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#" class="text-secondary hover-rubini"><i class="bi bi-facebook fs-4"></i></a>
+                <a href="#" class="text-secondary hover-rubini"><i class="bi bi-instagram fs-4"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/56967894789" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/rubini-comprar.js"></script>
+</body>
+</html>

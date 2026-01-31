@@ -1,0 +1,242 @@
+:root {
+    --royal-gold: #FFD700;
+    --royal-gold-dark: #B8860B;
+    --royal-blue: #1E3A8A;
+    --royal-blue-hover: #172554;
+    --bg-dark: #121212;
+    --bg-wood: #2c1e14;
+}
+
+
+body {
+    font-family: 'Cinzel', serif;
+    background-color: #141419;
+    color: #f0f0f0;
+    background-image: linear-gradient(rgba(20, 20, 25, 0.96), rgba(20, 20, 25, 0.98)), 
+                      url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+}
+
+h1, h2, h3, .navbar-brand {
+    font-family: 'MedievalSharp', cursive;
+}
+
+.font-medieval {
+    font-family: 'MedievalSharp', cursive;
+}
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.95) !important;
+    border-bottom: 2px solid var(--royal-gold-dark);
+    backdrop-filter: blur(10px);
+}
+
+.navbar-brand {
+    color: var(--royal-gold) !important;
+    font-size: 1.8rem;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.nav-link {
+    color: #ddd !important;
+    transition: color 0.3s;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--royal-gold) !important;
+}
+
+.btn-royal {
+    background-color: var(--royal-blue);
+    border-color: #1a337a;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-royal:hover {
+    background-color: var(--royal-gold);
+    color: black;
+    border-color: var(--royal-gold);
+    transform: translateY(-2px);
+}
+
+.hover-warning:hover {
+    color: var(--royal-gold) !important;
+    transition: color 0.3s;
+}
+
+.card-tibia {
+    background: rgba(30, 20, 10, 0.8);
+    border: 1px solid var(--royal-gold-dark);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-tibia:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+    border-color: var(--royal-gold);
+}
+
+.coin-icon {
+    font-size: 3rem;
+    color: var(--royal-gold);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.price-tag {
+    font-size: 2rem;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.calculator-box {
+    background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+    border: 2px solid var(--royal-gold-dark);
+    border-radius: 15px;
+}
+
+.form-control {
+    background-color: #333;
+    border: 1px solid #555;
+    color: white;
+}
+
+.form-control:focus {
+    background-color: #444;
+    color: white;
+    border-color: var(--royal-gold);
+    box-shadow: 0 0 0 0.25rem rgba(255, 215, 0, 0.25);
+}
+
+footer {
+    border-top: 3px solid var(--royal-gold-dark);
+    background-color: #000;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+    background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+#coinInput {
+    transition: all 0.2s ease-in-out;
+}
+
+
+.nav-logo {
+    height: 45px;
+    width: auto;
+    border-radius: 5px;
+    transition: all 0.4s ease;
+    filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.3));
+}
+
+.navbar-brand:hover .nav-logo {
+    filter: drop-shadow(0 0 8px var(--royal-gold));
+    transform: scale(1.1) rotate(-2deg);
+}
+
+#currencySelector {
+    background-color: #000;
+    border: 1px solid var(--royal-gold-dark);
+    color: var(--royal-gold);
+    font-weight: bold;
+}
+
+#currencySelector:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 215, 0, 0.25);
+    border-color: var(--royal-gold);
+}
+
+.form-control::placeholder {
+    color: #bbbbbb !important;
+    opacity: 1;
+}
+
+.form-control {
+    background-color: #333 !important;
+    color: white !important;
+}
+
+#priceOutput {
+    color: #FFD700 !important;
+    border: 1px solid #FFD700 !important;
+    background-color: #151515 !important;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
+    font-weight: 700;     
+    font-size: 1.2rem;    
+}
+
+.dropdown-menu {
+    background-color: rgba(0, 0, 0, 0.95) !important;
+    border: 1px solid var(--royal-gold-dark) !important;
+    backdrop-filter: blur(10px);
+}
+.dropdown-item {
+    color: #ddd !important;
+    font-family: 'Cinzel', serif;
+    padding: 10px 20px;
+}
+.dropdown-item:hover {
+    background-color: var(--royal-gold) !important;
+    color: black !important;
+}
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366;
+    color: white !important;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 32px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.whatsapp-float:hover {
+    background-color: #1ebe57;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.6);
+}
+
+.status-dot {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.status-online {
+    background-color: #25d366;
+    box-shadow: 0 0 10px #25d366;
+    animation: pulse-green 2s infinite;
+}
+
+.status-offline {
+    background-color: #dc3545;
+    box-shadow: 0 0 5px #dc3545;
+    opacity: 0.8;
+}
+
+@keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+.navbar .container {
+    position: relative; 
+}
