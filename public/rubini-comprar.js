@@ -87,7 +87,7 @@ function updatePaymentIcons() {
 }
 
 async function validateRubiniFormat(name, inputElement) {
-    const apiUrl = `http://localhost:3000/check-char?name=${encodeURIComponent(name)}`;
+    const apiUrl = `/check-char?name=${encodeURIComponent(name)}`;
 
     try {
         const response = await fetch(apiUrl);

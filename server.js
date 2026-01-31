@@ -1,17 +1,16 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
 const cors = require('cors');
-const path = require('path'); // Necesario para servir tus carpetas
+const path = require('path');
 
 const app = express();
-// IMPORTANTE: Render asigna el puerto automáticamente, por eso usamos process.env.PORT
+// Puerto dinámico para Render o 3000 para tu PC
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// 1. Servir tus archivos estáticos (CSS, JS de los archivos que subiste)
-// Asegúrate de que tus archivos estén dentro de una carpeta llamada 'public'
+// Servir archivos de la carpeta public (HTML, CSS, JS del front)
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/check-char', async (req, res) => {
@@ -21,72 +20,81 @@ app.get('/check-char', async (req, res) => {
         return res.status(400).json({ error: 'Falta el nombre' });
     }
 
-    console.log(`🔎 Buscando: "${charName}"`);
+    console.log(`🔎 Buscando en Rubinot: "${charName}"`);
     
     let browser;
 
     try {
         browser = await puppeteer.launch({
             headless: "new",
+            // Ruta para Render o undefined para usar la local en tu PC
             executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
-            // FLAGS CRÍTICAS PARA RENDER/DOCKER
             args: [
                 '--no-sandbox', 
                 '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage', // Evita que se bloquee por falta de memoria RAM
+                '--disable-dev-shm-usage',
                 '--single-process'
             ]
         });
 
         const page = await browser.newPage();
         
+        // Fingir que somos un navegador real
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
 
         const targetUrl = `https://rubinot.com.br/?subtopic=characters&name=${encodeURIComponent(charName)}`;
         
-        // Timeout de 20s para darle aire a la conexión de la nube
-        await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: 20000 });
+        // Navegación con tiempo de espera generoso
+        await page.goto(targetUrl, { 
+            waitUntil: 'domcontentloaded', 
+            timeout: 40000 
+        });
 
-        const pageText = await page.$eval('body', el => el.innerText);
-        
-        const errorPhrases = [
-            "does not exist or has been deleted",
-            "The Following Errors Have Occurred"
-        ];
-        const hasError = errorPhrases.some(phrase => pageText.includes(phrase));
+        // Espera de seguridad para que cargue el contenido dinámico
+        await new Promise(r => setTimeout(r, 2000));
 
-        const successPhrases = [
-            "Character Information",
-            "Vocation:",
-            "Level:",
-            "Sex:"
-        ];
-        const hasData = successPhrases.some(phrase => pageText.includes(phrase));
+        // Analizar el contenido de la página
+        const result = await page.evaluate(() => {
+            const bodyText = document.body.innerText;
+            
+            // Frases que indican que NO existe
+            const errorPhrases = ["does not exist", "The Following Errors Have Occurred"];
+            // Frases que indican que SÍ existe
+            const successPhrases = ["Character Information", "Vocation:", "Level:"];
 
-        const exists = hasData && !hasError;
+            const hasError = errorPhrases.some(p => bodyText.toLowerCase().includes(p.toLowerCase()));
+            const hasData = successPhrases.some(p => bodyText.includes(p));
 
-        console.log(`✅ Resultado para "${charName}": ${exists ? 'EXISTE' : 'NO EXISTE'}`);
+            return hasData && !hasError;
+        });
+
+        console.log(`✅ Resultado para "${charName}": ${result ? 'EXISTE' : 'NO EXISTE'}`);
 
         await browser.close();
 
         return res.json({ 
             name: charName,
-            exists: exists 
+            exists: result 
         });
 
     } catch (error) {
-        console.error("❌ Error verificando:", error.message);
+        console.error("❌ Error en Puppeteer:", error.message);
         if (browser) await browser.close();
-        // Respondemos 200 pero con exists false para que el front no se rompa
-        return res.json({ name: charName, exists: false, error: "Timeout o error de red" });
+        
+        // Enviamos exists: false para no bloquear el front-end
+        return res.json({ 
+            name: charName, 
+            exists: false, 
+            error: "Error de conexión con Rubinot" 
+        });
     }
 });
 
-// 2. Ruta para servir tu index.html principal
+// Ruta principal
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`🛡️ Servidor RoyalCoins activo en puerto ${PORT}`);
 });
