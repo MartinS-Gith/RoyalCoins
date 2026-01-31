@@ -87,9 +87,7 @@ function updatePaymentIcons() {
 }
 
 async function validateRubiniFormat(name, inputElement) {
-    // Al usar solo /check-char, el navegador usará automáticamente 
-    // el dominio donde esté alojada la página (ej: royalcoins.onrender.com)
-    const apiUrl = `/check-char?name=${encodeURIComponent(name)}`;
+    const apiUrl = `http://localhost:3000/check-char?name=${encodeURIComponent(name)}`;
 
     try {
         const response = await fetch(apiUrl);
