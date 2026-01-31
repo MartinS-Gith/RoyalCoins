@@ -28,7 +28,6 @@ app.get('/check-char', async (req, res) => {
         browser = await puppeteer.launch({
             headless: "new",
             // Ruta para Render o undefined para usar la local en tu PC
-            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
             args: [
                 '--no-sandbox', 
                 '--disable-setuid-sandbox',
