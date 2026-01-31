@@ -87,11 +87,13 @@ function updatePaymentIcons() {
 }
 
 async function validateRubiniFormat(name, inputElement) {
-    const apiUrl = `http://localhost:3000/check-char?name=${encodeURIComponent(name)}`;
+    // Al usar solo /check-char, el navegador usará automáticamente 
+    // el dominio donde esté alojada la página (ej: royalcoins.onrender.com)
+    const apiUrl = `/check-char?name=${encodeURIComponent(name)}`;
 
     try {
         const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error("Error del servidor local");
+        if (!response.ok) throw new Error("Error en el servidor");
         const data = await response.json();
         
         if (data.exists === true) {
@@ -108,6 +110,7 @@ async function validateRubiniFormat(name, inputElement) {
     } catch (error) {
         console.error("Error validando:", error);
         isCharVerified = false;
+        // Este es el mensaje que ves ahora porque el 'fetch' a localhost falla
         updateFeedbackMsg(inputElement, 'warning-network', name);
     }
 }
