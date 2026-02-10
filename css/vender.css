@@ -1,0 +1,253 @@
+:root {
+    --gold-primary: #FFD700;
+    --gold-dark: #B8860B;
+    --gold-glow: rgba(255, 215, 0, 0.5);
+    --bg-card-gold: linear-gradient(145deg, #1a1a1a, #2c2409);
+    --text-accent-gold: #fff5cc;
+    --sell-green: #198754;
+}
+
+body {
+    background-color: #121212;
+    font-family: 'Cinzel', serif;
+    color: #f0f0f0;
+    background-image: linear-gradient(rgba(20, 20, 25, 0.96), rgba(20, 20, 25, 0.98)), 
+                      url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+}
+
+.font-medieval, h1, h3, .navbar-brand {
+    font-family: 'MedievalSharp', cursive;
+}
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.95) !important;
+    border-bottom: 2px solid var(--gold-dark);
+    backdrop-filter: blur(10px);
+}
+
+.navbar-brand {
+    color: var(--gold-primary) !important;
+    font-size: 1.8rem;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.nav-logo {
+    height: 45px;
+    width: auto;
+    border-radius: 5px;
+    filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.3));
+    transition: all 0.4s ease;
+}
+
+.navbar-brand:hover .nav-logo {
+    transform: scale(1.1) rotate(-2deg);
+}
+
+.nav-link {
+    color: #ddd !important;
+    transition: color 0.3s;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--gold-primary) !important;
+}
+
+.dropdown-menu {
+    background-color: rgba(0, 0, 0, 0.95) !important;
+    border: 1px solid var(--gold-dark) !important;
+    backdrop-filter: blur(10px);
+}
+
+.dropdown-item {
+    color: #ddd !important;
+    font-family: 'Cinzel', serif;
+    padding: 10px 20px;
+}
+
+.dropdown-item:hover {
+    background-color: var(--gold-primary) !important;
+    color: black !important;
+}
+
+#currencySelector {
+    background-color: #000;
+    border: 1px solid var(--gold-dark);
+    color: var(--gold-primary);
+    font-weight: bold;
+}
+
+#currencySelector:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 215, 0, 0.25);
+    border-color: var(--gold-primary);
+}
+
+
+.card-sell-gold {
+    background: var(--bg-card-gold);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.card-sell-gold:hover {
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 25px var(--gold-glow);
+}
+
+.btn-sell-gold {
+    background-color: var(--gold-primary);
+    color: #000;
+    font-weight: 700;
+    border: none;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+    transition: all 0.3s ease;
+    padding: 1rem;
+}
+
+.btn-sell-gold:hover {
+    background-color: #ffed4d;
+    box-shadow: 0 0 20px var(--gold-glow);
+    transform: translateY(-2px);
+    color: #000;
+}
+
+.form-control-gold {
+    background-color: #0a0a0a !important;
+    border: 1px solid #443e2a;
+    color: #fff !important;
+    border-radius: 6px;
+}
+
+.form-control-gold:focus {
+    border-color: var(--gold-primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 215, 0, 0.25) !important;
+}
+
+.form-control-gold::placeholder {
+    color: #999;
+}
+
+.input-display-gold {
+    background-color: #000 !important;
+    border: 1px solid var(--gold-primary) !important;
+    color: var(--gold-primary) !important;
+    font-family: monospace;
+    font-size: 1.25rem;
+    box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+.text-gold-primary {
+    color: var(--gold-primary) !important;
+}
+
+.text-glow-gold {
+    text-shadow: 0 0 15px var(--gold-glow);
+}
+
+.step-badge-gold {
+    background-color: var(--gold-primary);
+    color: #000;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.step-badge-gold.success {
+    background-color: #198754;
+    color: white;
+    box-shadow: 0 0 10px rgba(25, 135, 84, 0.6);
+}
+
+footer {
+    border-top: 3px solid var(--gold-dark);
+    background-color: #000;
+}
+
+.hover-warning:hover {
+    color: var(--gold-primary) !important;
+    transition: color 0.3s;
+}
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366;
+    color: white !important;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 32px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.whatsapp-float:hover {
+    background-color: #1ebe57;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.6);
+}
+
+.status-dot {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.status-online {
+    background-color: #25d366;
+    box-shadow: 0 0 10px #25d366;
+    animation: pulse-green 2s infinite;
+}
+
+.status-offline {
+    background-color: #dc3545;
+    box-shadow: 0 0 5px #dc3545;
+    opacity: 0.8;
+}
+
+@keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+.navbar .container {
+    position: relative; 
+}
+
+.form-select-gold {
+    background-color: #0a0a0a !important;
+    border: 1px solid #443e2a;
+    color: #fff !important;
+    border-radius: 6px;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23FFD700' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+}
+
+.form-select-gold:focus {
+    border-color: var(--gold-primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 215, 0, 0.25) !important;
+}
+
+.form-select-gold option {
+    background-color: #000;
+    color: #fff;
+}
