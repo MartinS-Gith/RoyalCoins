@@ -2,7 +2,7 @@
 
 /* CONFIGURACIÓN CENTRALIZADA ROYALCOINS */
 const ROYAL_CONFIG = {
-    whatsappNumber: "56967894789",
+    whatsappNumber: "56984278148",
 
     currencies: {
         BRL: { 
