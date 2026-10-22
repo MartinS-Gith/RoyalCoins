@@ -150,13 +150,11 @@ function validarRut(rut) {
 async function fetchExchangeRates() {
     if(payoutOutput) payoutOutput.value = "Cargando...";
     const url = 'https://economia.awesomeapi.com.br/last/BRL-USD,BRL-EUR,BRL-CLP,BRL-ARS';
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        exchangeRates = { BRL: 1, USD: parseFloat(data.BRLUSD.bid), EUR: parseFloat(data.BRLEUR.bid), CLP: parseFloat(data.BRLCLP.bid), ARS: parseFloat(data.BRLARS.bid) };
-        if(currencySelector) currentCurrency = currencySelector.value;
-        calculatePayout();
-    } catch (e) { console.error(e); }
+    exchangeRates = await loadExchangeRates('BRL', url, data => ({
+        BRL: 1, USD: data.BRLUSD.bid, EUR: data.BRLEUR.bid, CLP: data.BRLCLP.bid, ARS: data.BRLARS.bid
+    })) || {};
+    if(currencySelector) currentCurrency = currencySelector.value;
+    calculatePayout();
 }
 
 function calculatePayout() {
@@ -164,7 +162,8 @@ function calculatePayout() {
     let amount = parseFloat(sellInput.value);
     if (amount && amount >= 250) { 
         const valueInBrl = amount * LOCAL_CONFIG_SELL.baseBuyPricePerCoinBRL;
-        const rate = exchangeRates[currentCurrency] || 1;
+        const rate = exchangeRates[currentCurrency];
+        if (!rate) { payoutOutput.value = rateUnavailableText(); return; }
         let finalValue = valueInBrl * rate;
         if (['CLP', 'ARS'].includes(currentCurrency)) finalValue = Math.round(finalValue);
         const formatted = new Intl.NumberFormat(ROYAL_CONFIG.currencies[currentCurrency].locale, { 
@@ -185,8 +184,13 @@ function generateWhatsAppLink() {
     const specificBank = inputOtherBank.value.trim();
     let errorMsg = "";
 
+    if (!exchangeRates[currentCurrency]) {
+        sellWarning.innerText = "⏳ Esperando la cotización, intenta en unos segundos.";
+        sellWarning.style.display = 'block'; return;
+    }
+
     if (!checkTerms.checked) {
-        sellWarning.innerText = "⚠️ Acepta términos."; 
+        sellWarning.innerText = "⚠️ Acepta términos.";
         sellWarning.style.display = 'block'; return;
     }
 

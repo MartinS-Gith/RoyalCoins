@@ -144,23 +144,22 @@ async function fetchExchangeRates() {
     dynamicPrices.forEach(el => el.textContent = "...");
     if(priceOutput) priceOutput.value = "Cargando...";
     const url = 'https://economia.awesomeapi.com.br/last/EUR-BRL,EUR-USD,BRL-CLP,BRL-ARS';
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
+    exchangeRates = await loadExchangeRates('EUR', url, data => {
         const eurToBrl = parseFloat(data.EURBRL.ask);
-        exchangeRates = {
-            EUR: 1, BRL: eurToBrl, USD: parseFloat(data.EURUSD.ask),
+        return {
+            EUR: 1, BRL: eurToBrl, USD: data.EURUSD.ask,
             CLP: eurToBrl * parseFloat(data.BRLCLP.ask), ARS: eurToBrl * parseFloat(data.BRLARS.ask)
         };
-        exchangeRates['VEF'] = 8.0;
-        updateUI();
-    } catch (error) { console.error('Error API:', error); }
+    }) || {};
+    exchangeRates['VEF'] = 8.0;
+    updateUI();
 }
 
 function calculatePrice(tibiaCoins) {
     const baseBlockSize = 250;
     const blockPriceEur = baseBlockSize * LOCAL_CONFIG.basePricePerCoinEUR;
-    const rate = exchangeRates[currentCurrency] || 1;
+    const rate = exchangeRates[currentCurrency];
+    if (!rate) return null;
     const rawBlockPrice = blockPriceEur * rate;
     let roundedBlockPrice = 0;
     if (['CLP', 'ARS'].includes(currentCurrency)) roundedBlockPrice = Math.floor(rawBlockPrice / 100) * 100;
@@ -171,6 +170,7 @@ function calculatePrice(tibiaCoins) {
 }
 
 function formatCurrency(value) {
+    if (value === null) return rateUnavailableText();
     const details = ROYAL_CONFIG.currencies[currentCurrency] || { locale: 'en-US', symbol: '$' };
     const noDecimals = ['CLP', 'ARS', 'UYU', 'VEF'].includes(currentCurrency);
     const formattedValue = new Intl.NumberFormat(details.locale, { 
@@ -232,6 +232,11 @@ if (startPaymentBtn) {
         }
         
         if (amount >= 250 && amount % 250 === 0) {
+            if (calculatePrice(amount) === null) {
+                warningMsg.style.display = 'block';
+                warningMsg.innerText = "⏳ Esperando la cotización, intenta en unos segundos.";
+                return;
+            }
             warningMsg.style.display = 'none';
             document.getElementById('modalAmount').innerText = `${amount} TC`;
             document.getElementById('modalPrice').innerText = priceOutput.value;

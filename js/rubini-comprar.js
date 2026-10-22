@@ -97,22 +97,19 @@ async function fetchExchangeRates() {
     if(dynamicPrices.length > 0) dynamicPrices.forEach(el => el.textContent = "...");
     if(priceOutput) priceOutput.value = "Cargando...";
     const url = 'https://economia.awesomeapi.com.br/last/BRL-USD,BRL-EUR,BRL-CLP,BRL-ARS';
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        exchangeRates = {
-            USD: parseFloat(data.BRLUSD.ask), EUR: parseFloat(data.BRLEUR.ask),
-            CLP: parseFloat(data.BRLCLP.ask), ARS: parseFloat(data.BRLARS.ask), BRL: 1
-        };
-        if(currencySelector && currencySelector.value) currentCurrency = currencySelector.value;
-        updateUI();
-    } catch (error) { console.error(error); }
+    exchangeRates = await loadExchangeRates('BRL', url, data => ({
+        USD: data.BRLUSD.ask, EUR: data.BRLEUR.ask,
+        CLP: data.BRLCLP.ask, ARS: data.BRLARS.ask, BRL: 1
+    })) || {};
+    if(currencySelector && currencySelector.value) currentCurrency = currencySelector.value;
+    updateUI();
 }
 
 function calculatePrice(amount) {
     const baseBlockSize = 250;
     const priceInReales250 = baseBlockSize * LOCAL_CONFIG.basePricePerCoinBRL; 
-    const rate = currentCurrency === 'BRL' ? 1 : (exchangeRates[currentCurrency] || 1);
+    const rate = currentCurrency === 'BRL' ? 1 : exchangeRates[currentCurrency];
+    if (!rate) return null;
     const rawPrice250 = priceInReales250 * rate;
     
     let roundedBasePrice250;
@@ -127,6 +124,7 @@ function calculatePrice(amount) {
 }
 
 function formatCurrency(value) {
+    if (value === null) return rateUnavailableText();
     const details = ROYAL_CONFIG.currencies[currentCurrency] || { locale: 'en-US', symbol: '$' };
     const noDecimals = ['CLP', 'ARS'].includes(currentCurrency);
     const formattedValue = new Intl.NumberFormat(details.locale, { 
@@ -192,6 +190,11 @@ if (startPaymentBtn) {
         }
         
         if (amount >= 250 && amount % 250 === 0) {
+            if (calculatePrice(amount) === null) {
+                warningMsg.style.display = 'block';
+                warningMsg.innerText = "⏳ Esperando la cotización, intenta en unos segundos.";
+                return;
+            }
             warningMsg.style.display = 'none';
             document.getElementById('modalAmount').innerText = `${amount} RC`;
             document.getElementById('modalPrice').innerText = priceOutput.value;

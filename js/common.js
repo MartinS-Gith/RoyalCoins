@@ -81,6 +81,79 @@ function checkBusinessStatus() {
 }
 
 /* =========================================
+   TASAS DE CAMBIO (CON RESPALDO)
+   Sin tasa NUNCA se cotiza: antes se usaba tasa 1 y se
+   mostraban reales/euros como si fueran CLP.
+   ========================================= */
+const RATE_CURRENCIES = ['BRL', 'USD', 'EUR', 'CLP', 'ARS'];
+const RATE_CACHE_MAX_AGE = 3 * 24 * 60 * 60 * 1000; // 3 días
+let ratesStatus = 'loading'; // 'loading' | 'ok' | 'error'
+
+// Devuelve { MONEDA: valor de 1 `base` en esa moneda } o null si no hay cotización.
+// Orden: API principal de la página -> open.er-api.com -> última cotización guardada en el navegador
+async function loadExchangeRates(base, primaryUrl, parsePrimary) {
+    const cacheKey = `royalRates_${base}`;
+    const sources = [
+        async () => parsePrimary(await fetchJsonWithTimeout(primaryUrl)),
+        async () => {
+            const data = await fetchJsonWithTimeout(`https://open.er-api.com/v6/latest/${base}`);
+            if (data.result !== 'success') throw new Error(`open.er-api: ${data['error-type']}`);
+            return data.rates;
+        }
+    ];
+
+    for (const source of sources) {
+        try {
+            const rates = pickValidRates(await source());
+            try { localStorage.setItem(cacheKey, JSON.stringify({ rates, savedAt: Date.now() })); } catch (e) {}
+            ratesStatus = 'ok';
+            return rates;
+        } catch (error) {
+            console.warn('Fuente de tasas falló:', error);
+        }
+    }
+
+    try {
+        const cached = JSON.parse(localStorage.getItem(cacheKey));
+        if (cached && Date.now() - cached.savedAt < RATE_CACHE_MAX_AGE) {
+            const rates = pickValidRates(cached.rates);
+            ratesStatus = 'ok';
+            return rates;
+        }
+    } catch (e) {}
+
+    ratesStatus = 'error';
+    return null;
+}
+
+async function fetchJsonWithTimeout(url, ms = 8000) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), ms);
+    try {
+        const response = await fetch(url, { signal: controller.signal });
+        if (!response.ok) throw new Error(`HTTP ${response.status} en ${url}`);
+        return await response.json();
+    } finally {
+        clearTimeout(timer);
+    }
+}
+
+// Se queda con las monedas que usamos y exige que todas sean números positivos
+function pickValidRates(rates) {
+    const picked = {};
+    RATE_CURRENCIES.forEach(code => {
+        const value = parseFloat(rates[code]);
+        if (!(value > 0)) throw new Error(`Tasa inválida para ${code}`);
+        picked[code] = value;
+    });
+    return picked;
+}
+
+function rateUnavailableText() {
+    return ratesStatus === 'error' ? 'Sin cotización' : 'Cargando...';
+}
+
+/* =========================================
    ROYAL FORMATTERS (LÓGICA DE INPUTS)
    ========================================= */
 const ROYAL_FORMATTERS = {

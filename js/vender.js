@@ -183,17 +183,15 @@ function validarRut(rut) {
 async function fetchExchangeRates() {
     if(payoutOutput) payoutOutput.value = "Cargando...";
     const url = 'https://economia.awesomeapi.com.br/last/EUR-USD,USD-BRL,USD-CLP,USD-ARS';
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
+    exchangeRates = await loadExchangeRates('EUR', url, data => {
         const eurToUsd = parseFloat(data.EURUSD.bid);
-        exchangeRates = {
-            EUR: 1, USD: eurToUsd, 
+        return {
+            EUR: 1, USD: eurToUsd,
             BRL: eurToUsd * parseFloat(data.USDBRL.bid), CLP: eurToUsd * parseFloat(data.USDCLP.bid), ARS: eurToUsd * parseFloat(data.USDARS.bid)
         };
-        if(currencySelector && currencySelector.value) currentCurrency = currencySelector.value;
-        calculatePayout();
-    } catch (error) { if(payoutOutput) payoutOutput.value = "Error API"; }
+    }) || {};
+    if(currencySelector && currencySelector.value) currentCurrency = currencySelector.value;
+    calculatePayout();
 }
 
 function calculatePayout() {
@@ -202,7 +200,8 @@ function calculatePayout() {
     if (amount && amount >= 250) { 
         sellWarning.style.display = 'none';
         const valueInEur = amount * LOCAL_CONFIG_SELL.baseBuyPricePerCoinEUR;
-        const rate = exchangeRates[currentCurrency] || 1;
+        const rate = exchangeRates[currentCurrency];
+        if (!rate) { payoutOutput.value = rateUnavailableText(); return; }
         let finalPayout = valueInEur * rate;
         if (['CLP', 'ARS'].includes(currentCurrency)) finalPayout = Math.floor(finalPayout / 100) * 100;
         else finalPayout = Math.floor(finalPayout * 10) / 10;
@@ -224,6 +223,11 @@ function generateWhatsAppLink() {
     const specificBank = inputOtherBank.value.trim();
     
     let errorMsg = "";
+
+    if (!exchangeRates[currentCurrency]) {
+        sellWarning.innerText = "⏳ Esperando la cotización, intenta en unos segundos.";
+        sellWarning.style.display = 'block'; return;
+    }
 
     if (!checkTerms.checked) {
         sellWarning.innerText = "⚠️ Debes aceptar los términos y condiciones.";
